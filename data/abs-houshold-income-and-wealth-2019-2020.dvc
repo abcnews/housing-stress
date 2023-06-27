@@ -1,0 +1,13 @@
+md5: e7e3e692a0953a7eb181d27b4e1c40f9
+frozen: true
+deps:
+- path: data/abs-houshold-income-and-wealth-2019-2020
+  repo:
+    url: ../data-registry
+    rev_lock: 282da6169dddc61eed697d255bf09a32398db287
+outs:
+- md5: 15e1c4824029671c34824117ef7bbaec.dir
+  size: 7932371
+  nfiles: 2
+  hash: md5
+  path: abs-houshold-income-and-wealth-2019-2020
