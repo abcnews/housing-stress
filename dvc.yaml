@@ -1,0 +1,7 @@
+stages:
+  xls2json:
+    cmd: node scripts/quintiles.js
+    deps:
+    - data/ben-philips-housing-data/Rent Mortgage Oz2.xls
+    outs:
+    - data/housing-data-clean/quintiles.json

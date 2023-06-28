@@ -1,0 +1,6 @@
+outs:
+- md5: e2b40bece07f8cead417b58985732578.dir
+  size: 157443
+  nfiles: 3
+  hash: md5
+  path: ben-philips-housing-data

@@ -7,8 +7,24 @@
   "contributors": [
     "Simon Elvery <simon@elvery.net>"
   ],
+  
   "aunty": {
-    "type": "svelte"
+    "type": "svelte",
+    "serve": {
+      "hasBundleAnalysis": true
+    },
+    "webpack": {
+      "devtool": "source-map"
+    },
+    "build": {
+      "includedDependencies": [
+        "layercake"
+      ],
+      "entry": [
+        "index",
+        "explorer"
+      ]
+    }
   },
   "scripts": {
     "start": "aunty serve",
@@ -17,14 +33,22 @@
   },
   "devDependencies": {
     "@abcnews/aunty": "^14.0.0",
-    "@testing-library/svelte": "^3.2.2",
+    "@testing-library/svelte": "^4.0.1",
+    "@types/d3-array": "^3.0.5",
+    "@types/d3-shape": "^3.1.1",
     "@types/jest": "^29.5.2",
-    "@types/webpack-env": "^1.18.1"
+    "@types/webpack-env": "^1.18.1",
+    "xlsx": "^0.18.5"
   },
   "dependencies": {
     "@abcnews/alternating-case-to-object": "^3.1.0",
     "@abcnews/env-utils": "^3.1.0",
     "@abcnews/mount-utils": "^2.0.0",
-    "svelte": "^3.59.1"
+    "@abcnews/palette": "^0.0.1",
+    "d3-array": "^3.2.4",
+    "d3-shape": "^3.2.0",
+    "layercake": "7.1",
+    "sass": "^1.63.6",
+    "svelte": "^3.59.2"
   }
 }
