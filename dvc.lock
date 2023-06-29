@@ -1,14 +1,18 @@
 schema: '2.0'
 stages:
   xls2json:
-    cmd: node scripts/quintiles.js
+    cmd: node scripts/quintiles.mjs
     deps:
     - path: data/ben-philips-housing-data/Rent Mortgage Oz2.xls
       hash: md5
       md5: 6a62030808117b278f1ebe4af42a4245
       size: 152064
+    - path: data/ben-philips-housing-data/tenureqntl.csv
+      hash: md5
+      md5: 21ebe8246975a745316f27d48a5186e8
+      size: 5231
     outs:
     - path: data/housing-data-clean/quintiles.json
       hash: md5
-      md5: f6b3454b679f12f169a2a78f02ec7d58
-      size: 3025
+      md5: 492c64138cefd50584a22eed2ac1b686
+      size: 9895
