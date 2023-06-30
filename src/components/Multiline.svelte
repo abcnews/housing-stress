@@ -1,28 +1,21 @@
 <script>
   import { getContext } from 'svelte';
   import { group } from 'd3-array';
-  import { line, curveLinear } from 'd3-shape';
+  import Line from './Line.svelte';
+  const { data, xGet, yGet, custom } = getContext('LayerCake');
 
-  const { data, xGet, yGet, zGet } = getContext('LayerCake');
-
-  $: grouped = group($data, d => d[0]);
-  export let curve = curveLinear;
-  $: path = line().x($xGet).y($yGet).curve(curve);
+  $: grouped = group($data, d => d[1]);
 
   const palette = ['#C0D8DB', '#92C1CC', '#69A8C1', '#4C8FBB', '#000'];
 </script>
 
 <g class="line-group">
-  {#each [...grouped] as [quartile, data], i}
-    <path class="path-line" d={path(data)} stroke={palette[i]} />
+  {#each [...grouped] as [quintile, data], i (quintile)}
+    {#if $custom.selectedQuintiles.includes(quintile)}
+      <Line stroke={palette[i]} data={data.map(d => [$xGet(d), $yGet(d)])} />
+    {/if}
   {/each}
 </g>
 
 <style>
-  .path-line {
-    fill: none;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-    stroke-width: 3px;
-  }
 </style>

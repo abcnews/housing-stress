@@ -7,7 +7,6 @@
   "contributors": [
     "Simon Elvery <simon@elvery.net>"
   ],
-  
   "aunty": {
     "type": "svelte",
     "serve": {
@@ -18,7 +17,8 @@
     },
     "build": {
       "includedDependencies": [
-        "layercake"
+        "layercake",
+        "carbon-components-svelte"
       ],
       "entry": [
         "index",
@@ -38,17 +38,22 @@
     "@types/d3-shape": "^3.1.1",
     "@types/jest": "^29.5.2",
     "@types/webpack-env": "^1.18.1",
+    "carbon-components-svelte": "^0.76.0",
     "xlsx": "^0.18.5"
   },
   "dependencies": {
     "@abcnews/alternating-case-to-object": "^3.1.0",
+    "@abcnews/base-36-props": "^1.4.0",
     "@abcnews/env-utils": "^3.1.0",
     "@abcnews/mount-utils": "^2.0.0",
     "@abcnews/palette": "^0.0.1",
     "d3-array": "^3.2.4",
+    "d3-dsv": "^3.0.1",
+    "d3-interpolate": "^3.0.1",
     "d3-shape": "^3.2.0",
     "layercake": "7.1",
     "sass": "^1.63.6",
-    "svelte": "^3.59.2"
+    "svelte": "^3.59.2",
+    "zod": "^3.21.4"
   }
 }

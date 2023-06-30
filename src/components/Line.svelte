@@ -1,19 +1,18 @@
 <script>
-  import { getContext } from 'svelte';
-  import { line, curveLinear } from 'd3-shape';
+  import { curveLinear, line } from 'd3-shape';
+  import { tweened } from 'svelte/motion';
+  import { interpolate } from 'd3-interpolate';
 
-  const { data, xGet, yGet } = getContext('LayerCake');
-
-  /** @type {String} [stroke='#ab00d6'] - The shape's fill color. This is technically optional because it comes with a default value but you'll likely want to replace it with your own color. */
   export let stroke = '#ab00d6';
-
-  /** @type {Function} [curve=curveLinear] - An optional D3 interpolation function. See [d3-shape](https://github.com/d3/d3-shape#curves) for options. Pass this function in uncalled, i.e. without the open-close parentheses. */
+  export let data;
   export let curve = curveLinear;
-  $: path = line().x($xGet).y($yGet).curve(curve);
-  // .defined($y)
+  const tweenedData = tweened(data, { interpolate });
+
+  $: path = line().curve(curve);
+  $: tweenedData.set(data);
 </script>
 
-<path class="path-line" d={path($data)} {stroke} />
+<path class="path-line" d={path($tweenedData)} {stroke} />
 
 <style>
   .path-line {
