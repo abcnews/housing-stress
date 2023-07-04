@@ -5,7 +5,7 @@ stages:
     deps:
     - path: data/ben-philips-housing-data/Rent Mortgage Oz2.xls
       hash: md5
-      md5: 390a822ac4d6acb78ef43aae559f8904
+      md5: 23766dabf42cb597b35f861c3ec4a57e
       size: 152064
     - path: data/ben-philips-housing-data/tenureqntl.csv
       hash: md5
@@ -14,5 +14,5 @@ stages:
     outs:
     - path: data/housing-data-clean/quintiles.json
       hash: md5
-      md5: 035d559772f11b6e81ad3aa75e529b86
-      size: 12421
+      md5: 4dd043b796c2192dec0feea17ea969f7
+      size: 12084

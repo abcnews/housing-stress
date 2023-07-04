@@ -41,10 +41,8 @@ const byTenureAndYear = byTenureAndYearRaw.reduce((acc, d) => {
   return acc;
 }, []);
 
-writeFile(
-  outputPath,
-  JSON.stringify([...byYearAndQuintile, ...byTenureAndYearAndQunintile, ...byTenureAndYear]),
-  err => {
-    if (err) throw err;
-  }
-);
+const clean = [...byYearAndQuintile, ...byTenureAndYearAndQunintile, ...byTenureAndYear].filter(d => d[2] !== 2021);
+
+writeFile(outputPath, JSON.stringify(clean), err => {
+  if (err) throw err;
+});
