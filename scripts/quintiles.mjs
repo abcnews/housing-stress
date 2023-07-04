@@ -17,9 +17,8 @@ const workbook = xlsx.readFile(inputPath);
 const sheetNames = workbook.SheetNames;
 
 // Get the data of the first sheet (should be "working")
-const data = xlsx.utils.sheet_to_json(workbook.Sheets[sheetNames[0]], { range: 'B60:U65' });
-
-const clean = data.reduce((acc, d) => {
+const byYearAndQuintileRaw = xlsx.utils.sheet_to_json(workbook.Sheets[sheetNames[0]], { range: 'B60:U65' });
+const byYearAndQuintile = byYearAndQuintileRaw.reduce((acc, d) => {
   let q = d.Year;
   Object.entries(d).forEach(([key, value]) => {
     if (key !== 'Year') {
@@ -29,16 +28,22 @@ const clean = data.reduce((acc, d) => {
   return acc;
 }, []);
 
-const byTenure = csvParse(readFileSync(tenurePath).toString());
+const byTenureAndYearAndQunintileRaw = csvParse(readFileSync(tenurePath).toString());
+const byTenureAndYearAndQunintile = byTenureAndYearAndQunintileRaw.map(d => {
+  return [d.Tenure === 'Renter' ? 'rent' : 'mortgage', d.Quintile, +d.Year, +d.Mortgage];
+});
+
+const byTenureAndYearRaw = xlsx.utils.sheet_to_json(workbook.Sheets[sheetNames[0]], { range: 'A24:D44' });
+const byTenureAndYear = byTenureAndYearRaw.reduce((acc, d) => {
+  acc.push(['rent', 'all', +d.Year, +d.Rent]);
+  acc.push(['mortgage', 'all', +d.Year, +d.Mortgage]);
+  acc.push(['overall', 'all', +d.Year, +d.All]);
+  return acc;
+}, []);
 
 writeFile(
   outputPath,
-  JSON.stringify([
-    ...clean,
-    ...byTenure.map(d => {
-      return [d.Tenure === 'Renter' ? 'rent' : 'mortgage', d.Quintile, +d.Year, +d.Mortgage];
-    })
-  ]),
+  JSON.stringify([...byYearAndQuintile, ...byTenureAndYearAndQunintile, ...byTenureAndYear]),
   err => {
     if (err) throw err;
   }
