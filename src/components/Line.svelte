@@ -1,12 +1,24 @@
-<script>
+<svelte:options namespace="svg" />
+
+<script lang="ts">
   import { curveLinear, line } from 'd3-shape';
   import { tweened } from 'svelte/motion';
   import { interpolate } from 'd3-interpolate';
+  import { tick } from 'svelte';
 
   export let stroke = '#ab00d6';
-  export let data;
+  export let data: [number, number][];
+  export let start: false | [number, number][];
   export let curve = curveLinear;
-  const tweenedData = tweened(data, { interpolate });
+
+  const interpolateY = (a, b) => t => interpolate(a, b)(t).map((d, i) => [b[i][0], d[1]]);
+  const tweenedData = tweened(start || data, { interpolate: interpolateY });
+
+  if (start) {
+    tick().then(() => {
+      tweenedData.set(data);
+    });
+  }
 
   $: path = line().curve(curve);
   $: tweenedData.set(data);
@@ -19,6 +31,6 @@
     fill: none;
     stroke-linejoin: round;
     stroke-linecap: round;
-    stroke-width: 2;
+    stroke-width: 3;
   }
 </style>

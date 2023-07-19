@@ -82,7 +82,8 @@
 <style>
   .tick {
     font-size: 0.725em;
-    font-weight: 200;
+    font-weight: bold;
+    font-family: var(--dls-font-stack-sans);
   }
 
   .tick line {

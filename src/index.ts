@@ -1,23 +1,35 @@
 import acto from '@abcnews/alternating-case-to-object';
 import { whenOdysseyLoaded } from '@abcnews/env-utils';
+import { loadScrollyteller } from '@abcnews/svelte-scrollyteller';
 import { getMountValue, selectMounts } from '@abcnews/mount-utils';
 import type { Mount } from '@abcnews/mount-utils';
-import App from './components/App/App.svelte';
+import ScrollyWrapper from './components/ScrollyWrapper.svelte';
+import { proxy } from '@abcnews/dev-proxy';
 
-let appMountEl: Mount;
-let appProps;
+const init = async () => {
+  await whenOdysseyLoaded;
 
-whenOdysseyLoaded.then(() => {
-  [appMountEl] = selectMounts('housingstress');
+  const scrollyConfig = loadScrollyteller('', 'u-full', 'mark');
 
-  if (appMountEl) {
-    appProps = acto(getMountValue(appMountEl));
-    new App({
-      target: appMountEl,
-      props: appProps
-    });
-  }
-});
+  scrollyConfig.panels = scrollyConfig.panels.map(d => ({ ...d, align: d.align || 'left' }));
+
+  let appMountEl: Mount;
+  let appProps;
+
+  // [appMountEl] = selectMounts('housingstress');
+
+  // if (appMountEl) {
+  // appProps = acto(getMountValue(appMountEl));
+  new ScrollyWrapper({
+    target: scrollyConfig.mountNode,
+    props: {
+      panels: scrollyConfig.panels
+    }
+  });
+  // }
+};
+
+proxy('housing-stress').then(init);
 
 if (process.env.NODE_ENV === 'development') {
   console.debug(`[housing-stress] public path: ${__webpack_public_path__}`);
