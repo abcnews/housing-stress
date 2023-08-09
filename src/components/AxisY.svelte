@@ -69,6 +69,7 @@
         />
       {/if}
       <text
+        class="tick-label"
         x={xTick}
         y={isBandwidth ? $yScale.bandwidth() / 2 + yTick : yTick}
         dx={isBandwidth ? -9 : dxTick}
@@ -80,24 +81,18 @@
 </g>
 
 <style>
-  .tick {
-    font-size: 0.725em;
-    font-weight: bold;
+  .tick-label {
+    font-size: 0.75rem;
+    font-weight: 400;
     font-family: var(--dls-font-stack-sans);
+    fill: #646464;
   }
 
-  .tick line {
-    stroke: #aaa;
-  }
-  .tick .gridline {
-    stroke-dasharray: 2;
+  .tick-mark {
+    stroke: #646464;
   }
 
-  .tick text {
-    fill: #666;
-  }
-
-  .tick.tick-0 line {
-    stroke-dasharray: 0;
+  .gridline {
+    stroke: rgba(0, 0, 0, 0.15);
   }
 </style>

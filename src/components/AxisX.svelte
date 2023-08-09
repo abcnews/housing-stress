@@ -4,7 +4,7 @@
  -->
 <script>
   import { getContext } from 'svelte';
-  const { width, height, xScale, yRange } = getContext('LayerCake');
+  const { width, height, xScale, yRange, padding } = getContext('LayerCake');
 
   /** @type {Boolean} [gridlines=true] - Extend lines from the ticks into the chart space */
   export let gridlines = true;
@@ -68,38 +68,47 @@
           x2={isBandwidth ? $xScale.bandwidth() / 2 : 0}
         />
       {/if}
-      <text x={isBandwidth ? $xScale.bandwidth() / 2 + xTick : xTick} y={yTick} dx="" dy="" text-anchor={textAnchor(i)}
-        >{formatTick(tick)}</text
+      <text
+        class="tick-label"
+        x={isBandwidth ? $xScale.bandwidth() / 2 + xTick : xTick}
+        y={yTick}
+        dx=""
+        dy=""
+        text-anchor={textAnchor(i)}>{formatTick(tick)}</text
       >
     </g>
   {/each}
   {#if baseline === true}
-    <line class="baseline" y1={$height + 0.5} y2={$height + 0.5} x1="0" x2={$width} />
+    <line
+      class="baseline"
+      y1={$height + 0.5}
+      y2={$height + 0.5}
+      x1={-$padding.left}
+      x2={$width + $padding.left + $padding.right}
+    />
   {/if}
 </g>
 
 <style>
-  .tick {
-    font-size: 0.725em;
-    font-weight: 200;
-    font-weight: bold;
-    font-family: var(--dls-font-stack-sans);
-  }
-
-  line,
-  .tick line {
-    stroke: #aaa;
-    stroke-dasharray: 2;
-  }
-
-  .tick text {
-    fill: #666;
-  }
-
-  .tick .tick-mark,
   .baseline {
-    stroke-dasharray: 0;
+    stroke: #646464;
   }
+
+  .tick-label {
+    font-size: 0.75rem;
+    font-weight: 400;
+    font-family: var(--dls-font-stack-sans);
+    fill: #646464;
+  }
+
+  .tick-mark {
+    stroke: #646464;
+  }
+
+  .grid-line {
+    stroke: rgba(0, 0, 0, 0.15);
+  }
+
   /* This looks slightly better */
   .axis.snapTicks .tick:last-child text {
     transform: translateX(3px);
