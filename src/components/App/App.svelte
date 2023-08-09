@@ -1,18 +1,17 @@
 <script lang="ts">
   import 'carbon-components-svelte/css/white.css';
-  import { Checkbox, FormGroup, Slider } from 'carbon-components-svelte';
-  import QuintilesLineChart from '../QuintilesLineChart.svelte';
+  import { Checkbox, FormGroup, Slider, RadioButton, RadioButtonGroup } from 'carbon-components-svelte';
+  import HousingCostsLineChart from '../HousingCostsLineChart.svelte';
   import quintiles from '../../../data/housing-data-clean/quintiles.json';
 
   import { DataSchema, VisualisationConfiguration } from '../../schemas';
 
   import Builder from '../Builder/Builder.svelte';
-  import { annotations } from '../../constants';
+  import { annotations, subtitles } from '../../constants';
   import { encode } from '@abcnews/base-36-props';
 
   const data = DataSchema.parse(quintiles);
   let configuration = VisualisationConfiguration.parse(undefined);
-
   let onLoad = c => {
     configuration = VisualisationConfiguration.parse(c);
   };
@@ -33,7 +32,13 @@
 </script>
 
 <Builder {configuration} {onLoad} calculateMarker={config => `#markCONFIG${encode(config)}`}>
-  <QuintilesLineChart slot="visualisation" {data} {...configuration} />
+  <HousingCostsLineChart
+    slot="visualisation"
+    {data}
+    {...configuration}
+    title="Housing costs as a portion of disposable income"
+    subtitle={subtitles.find(d => d.id === configuration.subtitle)}
+  />
   <svelte:fragment slot="controls">
     <FormGroup legendText="Tenure types">
       {#each tenureTypes as tenure}
@@ -49,6 +54,17 @@
       {#each series as s}
         <Checkbox name="series" bind:group={configuration.selectedSeries} labelText={s[1]} value={s[0]} />
       {/each}
+    </FormGroup>
+    <FormGroup>
+      <RadioButtonGroup legendText="Subtitle" bind:selected={configuration.subtitle}>
+        <RadioButton labelText="None" value="" />
+        {#each subtitles as subtitle}
+          <RadioButton labelText={subtitle.text} value={subtitle.id} />
+        {/each}
+      </RadioButtonGroup>
+    </FormGroup>
+    <FormGroup legendText="Labels">
+      <Checkbox labelText={'Show line labels'} name="showLineLabels" bind:checked={configuration.showLineLabels} />
     </FormGroup>
     <FormGroup>
       <Slider labelText="Minimum year" name="minYear" min={1984} max={2023} bind:value={configuration.minYear} />

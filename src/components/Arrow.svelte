@@ -3,8 +3,8 @@
   import { LayerCakeContext } from '../schemas';
   import { nanoid } from 'nanoid';
 
-  export let source: { x: number; y: number; offset?: number; arrow?: number };
-  export let target: { x: number; y: number; offset?: number; arrow?: number };
+  export let source: { x: number; y: number; offset?: number; arrowSize?: number };
+  export let target: { x: number; y: number; offset?: number; arrowSize?: number };
   export let curve: number = 0;
   export let offset: number = 10;
 
@@ -51,17 +51,17 @@
 
 <defs>
   {#each [source, target] as end, i}
-    {#if end.arrow}
+    {#if end.arrowSize}
       <marker
         id={`arrow-${i === 0 ? 'start' : 'end'}-${id}`}
-        viewBox="0 0 {end.arrow} {end.arrow}"
-        refX={end.arrow / 2}
-        refY={end.arrow / 2}
-        markerWidth={end.arrow * 0.6}
-        markerHeight={end.arrow * 0.6}
+        viewBox="0 0 {end.arrowSize} {end.arrowSize}"
+        refX={end.arrowSize / 2}
+        refY={end.arrowSize / 2}
+        markerWidth={end.arrowSize * 0.6}
+        markerHeight={end.arrowSize * 0.6}
         orient="auto-start-reverse"
       >
-        <path class="arrow" d={`M 0 0 L ${end.arrow} ${end.arrow / 2} L 0 ${end.arrow} z`} />
+        <path class="arrow" d={`M 0 0 L ${end.arrowSize} ${end.arrowSize / 2} L 0 ${end.arrowSize} z`} />
       </marker>
     {/if}
   {/each}
@@ -69,8 +69,8 @@
 
 <path
   d={path}
-  marker-end={target.arrow ? `url(#arrow-end-${id})` : ''}
-  marker-start={source.arrow ? `url(#arrow-start-${id})` : ''}
+  marker-end={target.arrowSize ? `url(#arrow-end-${id})` : ''}
+  marker-start={source.arrowSize ? `url(#arrow-start-${id})` : ''}
 />
 
 <style>

@@ -1,9 +1,10 @@
 <script lang="ts">
-  import QuintilesLineChart from './QuintilesLineChart.svelte';
+  import HousingCostsLineChart from './HousingCostsLineChart.svelte';
   import quintiles from '../../data/housing-data-clean/quintiles.json';
   import { decode } from '@abcnews/base-36-props';
   import { DataSchema, VisualisationConfiguration } from '../schemas';
   import Scrollyteller from '@abcnews/svelte-scrollyteller';
+  import { annotations, subtitles } from '../constants';
 
   export let panels;
   const data = DataSchema.parse(quintiles);
@@ -17,7 +18,12 @@
 
 <Scrollyteller {panels} onMarker={setConfig}>
   <div class="container">
-    <QuintilesLineChart {data} {...configuration} />
+    <HousingCostsLineChart
+      {data}
+      {...configuration}
+      title="Housing costs as a portion of disposable income"
+      subtitle={subtitles.find(d => d.id === configuration.subtitle)}
+    />
   </div>
 </Scrollyteller>
 
@@ -37,7 +43,7 @@
   @media (max-width: 1022px) {
     .container {
       margin: 0;
-      padding: 15%;
+      padding: 0 8%;
       width: auto;
       max-width: none;
     }

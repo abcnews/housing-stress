@@ -10,9 +10,17 @@ export const AnnotationConfig = z.object({
   text: z.string(),
   x: z.number(),
   y: z.number(),
-  offset: z.number().optional(),
+  series: z.string().optional(),
+  tenureType: z.string().optional(),
   arrows: z
-    .array(z.object({ target: z.object({ x: z.number(), y: z.number(), offset: z.number().optional() }) }))
+    .array(
+      z.object({
+        source: z
+          .object({ x: z.number().optional(), y: z.number().optional(), offset: z.number().optional() })
+          .optional(),
+        target: z.object({ x: z.number(), y: z.number(), offset: z.number().optional() })
+      })
+    )
     .optional()
 });
 export const VisualisationConfiguration = z
@@ -21,7 +29,9 @@ export const VisualisationConfiguration = z
     selectedTenureTypes: z.array(z.string()).default([]),
     minYear: z.number().default(1984),
     maxYear: z.number().default(2023),
-    annotations: z.array(z.string()).default([])
+    annotations: z.array(z.string()).default([]),
+    showLineLabels: z.boolean().default(false),
+    subtitle: z.string().default('')
   })
   .default({});
 
@@ -29,7 +39,7 @@ export const VisualisationConfiguration = z
 export type Extent = [number, number] | [string, string] | undefined;
 export type DataRowSchema = z.infer<typeof DataRowSchema>;
 export type DataSchema = z.infer<typeof DataSchema>;
-export type Settings = { selectedSeries: string[]; selectedTenureTypes: string[] };
+export type Settings = { selectedSeries: string[]; selectedTenureTypes: string[]; showLineLabels: boolean };
 
 export type LayerCakeContext = {
   data: Readable<DataSchema>;
@@ -38,6 +48,7 @@ export type LayerCakeContext = {
   xScale: Readable<(x: number) => number>;
   yScale: Readable<(y: number) => number>;
   xDomain: Readable<Tweened<Extent>>;
+  xRange: Readable<[number, number]>;
   custom: Readable<Settings>;
 };
 
