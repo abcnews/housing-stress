@@ -12,14 +12,14 @@ export const annotations: AnnotationConfig[] = [
     // text: 'Previous<br> high: <strong>15.7%</strong>',
     x: 1990,
     y: 0.35,
-    arrows: [{ source: { offset: 30 }, target: { x: 1993, y: 0.159 } }]
+    arrows: [{ source: { offset: 10 }, target: { x: 1993, y: 0.159 } }]
   },
   {
     name: 'Current high point',
     text: "It's up to <strong>17.6%</strong> in <strong>2023</strong>",
     x: 2016,
     y: 0.3,
-    arrows: [{ source: { offset: 25 }, target: { x: 2023, y: 0.18, offset: 10 } }]
+    arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.18, offset: 10 } }]
   },
 
   {
@@ -53,7 +53,7 @@ export const annotations: AnnotationConfig[] = [
     tenureType: 'mortgage',
     x: 2013,
     y: 0.4,
-    arrows: [{ source: { offset: 80 }, target: { x: 2023, y: 0.25, offset: 10 } }]
+    arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.25, offset: 10 } }]
   },
   {
     name: 'Quintile 1 - Overall',
@@ -93,8 +93,8 @@ export const annotations: AnnotationConfig[] = [
     series: 'Q1',
     tenureType: 'mortgage',
     x: 2008,
-    y: 0.55,
-    arrows: [{ source: { offset: 80 }, target: { x: 2023, y: 0.642, offset: 10 } }]
+    y: 0.62,
+    arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.642, offset: 10 } }]
   },
   {
     name: 'Quintile 5 - Mortgage — %',
@@ -103,7 +103,7 @@ export const annotations: AnnotationConfig[] = [
     tenureType: 'mortgage',
     x: 2008,
     y: 0.3,
-    arrows: [{ source: { offset: 80 }, target: { x: 2023, y: 0.229, offset: 10 } }]
+    arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.229, offset: 10 } }]
   },
   {
     name: 'Quintile 1 - Rent — %',
@@ -112,7 +112,7 @@ export const annotations: AnnotationConfig[] = [
     tenureType: 'rent',
     x: 2012,
     y: 0.5,
-    arrows: [{ source: { offset: 80 }, target: { x: 2023, y: 0.326, offset: 10 } }]
+    arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.326, offset: 10 } }]
   },
   {
     name: 'Quintile 5 - Rent — %',
@@ -121,6 +121,6 @@ export const annotations: AnnotationConfig[] = [
     tenureType: 'rent',
     x: 2014,
     y: 0.25,
-    arrows: [{ source: { offset: 80 }, target: { x: 2023, y: 0.144, offset: 10 } }]
+    arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.144, offset: 10 } }]
   }
 ];

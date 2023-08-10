@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { Html, LayerCake, Svg } from 'layercake';
+  import { LayerCake, Svg } from 'layercake';
   import AxisX from './AxisX.svelte';
   import AxisY from './AxisY.svelte';
   import Multiline from './Multiline.svelte';
   import { tweened } from 'svelte/motion';
   import { DataSchema, Extent } from '../schemas';
   import Annotation from './Annotation.svelte';
-  import Arrow from './Arrow.svelte';
   import { annotations as annotationDefs } from '../constants';
   import { getColourFor } from './colours';
 
@@ -59,29 +58,12 @@
         <AxisY formatTick={d => `${d * 100} %`} />
         <Multiline />
       </Svg>
-      <Svg>
-        {#each annotations as annotationName}
-          {@const annotation = getAnnotationConfig(annotationName)}
-          {#if annotation && annotation.arrows}
-            {#each annotation.arrows as arrow}
-              <Arrow source={{ ...annotation, ...arrow.source }} target={{ ...arrow.target, arrowSize: 0 }} curve={0} />
-            {/each}
-          {/if}
-        {/each}
-      </Svg>
-      <Html>
-        {#each annotations as annotationName}
-          {@const annotation = getAnnotationConfig(annotationName)}
-          {#if annotation}
-            <Annotation
-              --text-colour={getColourFor(annotation.series || '', annotation.tenureType || '')}
-              {...annotation}
-            >
-              {@html annotation.text}
-            </Annotation>
-          {/if}
-        {/each}
-      </Html>
+      {#each annotations as annotationName (annotationName)}
+        {@const annotation = getAnnotationConfig(annotationName)}
+        {#if annotation}
+          <Annotation {annotation} />
+        {/if}
+      {/each}
     </LayerCake>
   </div>
 </div>

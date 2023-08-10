@@ -20,7 +20,7 @@
   const interpolate = (from: number, to: number, t: number) => to + (from - to) * t;
 
   $: {
-    let anchors = {
+    const anchors = {
       source: {
         x: $xScale(source.x),
         y: $yScale(source.y)
@@ -35,10 +35,13 @@
       Math.pow(anchors.target.x - anchors.source.x, 2) + Math.pow(anchors.target.y - anchors.source.y, 2)
     );
 
-    x1 = interpolate(anchors.target.x, anchors.source.x, (source.offset || offset) / length);
-    y1 = interpolate(anchors.target.y, anchors.source.y, (source.offset || offset) / length);
-    x2 = interpolate(anchors.source.x, anchors.target.x, (target.offset || offset) / length);
-    y2 = interpolate(anchors.source.y, anchors.target.y, (target.offset || offset) / length);
+    const sourcePct = (source.offset || offset) / length;
+    const targetPct = (target.offset || offset) / length;
+
+    x1 = interpolate(anchors.target.x, anchors.source.x, sourcePct);
+    y1 = interpolate(anchors.target.y, anchors.source.y, sourcePct);
+    x2 = interpolate(anchors.source.x, anchors.target.x, targetPct);
+    y2 = interpolate(anchors.source.y, anchors.target.y, targetPct);
 
     if (curve) {
       let r = length / Math.abs(curve);
