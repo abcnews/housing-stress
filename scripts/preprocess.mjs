@@ -11,7 +11,8 @@ const __dirname = dirname(__filename);
 const dataPath = path.join(__dirname, '..', 'data');
 const inputPath = path.join(dataPath, 'ben-philips-housing-data', 'Rent Mortgage Oz2.xls');
 const tenurePath = path.join(dataPath, 'ben-philips-housing-data', 'tenureqntl.csv');
-const outputPath = path.join(dataPath, 'housing-data-clean', 'quintiles.json');
+const agePath = path.join(dataPath, 'ben-philips-housing-data', 'hstress3.xlsx');
+const outputPath = path.join(dataPath, 'housing-data-clean', 'data.json');
 
 const workbook = xlsx.readFile(inputPath);
 const sheetNames = workbook.SheetNames;
@@ -41,7 +42,25 @@ const byTenureAndYear = byTenureAndYearRaw.reduce((acc, d) => {
   return acc;
 }, []);
 
-const clean = [...byYearAndQuintile, ...byTenureAndYearAndQunintile, ...byTenureAndYear].filter(d => d[2] !== 2021);
+const byAgeWorkbook = xlsx.readFile(agePath);
+const byYearAndAgeRaw = xlsx.utils.sheet_to_json(byAgeWorkbook.Sheets['Table 32 - Table 32'], { range: 'P5:U58' });
+const byYearAndAge = byYearAndAgeRaw.reduce((acc, d) => {
+  Object.entries(d).forEach(([key, value]) => {
+    if (!key.startsWith('__')) {
+      acc.push([
+        d.__EMPTY_1 === 'Mortgagor' ? 'mortgage' : d.__EMPTY_1 === 'Renter' ? 'rent' : 'own',
+        key,
+        +d.__EMPTY,
+        value
+      ]);
+    }
+  });
+  return acc;
+}, []);
+
+const clean = [...byYearAndQuintile, ...byTenureAndYearAndQunintile, ...byTenureAndYear, ...byYearAndAge].filter(
+  d => d[2] !== 2021
+);
 
 writeFile(outputPath, JSON.stringify(clean), err => {
   if (err) throw err;

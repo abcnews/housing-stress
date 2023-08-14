@@ -2,7 +2,7 @@
   import 'carbon-components-svelte/css/white.css';
   import { Checkbox, FormGroup, Slider, RadioButton, RadioButtonGroup } from 'carbon-components-svelte';
   import HousingCostsLineChart from '../HousingCostsLineChart.svelte';
-  import quintiles from '../../../data/housing-data-clean/quintiles.json';
+  import dataRaw from '../../../data/housing-data-clean/data.json';
 
   import { DataSchema, VisualisationConfiguration } from '../../schemas';
 
@@ -10,7 +10,7 @@
   import { annotations, subtitles } from '../../constants';
   import { encode } from '@abcnews/base-36-props';
 
-  const data = DataSchema.parse(quintiles);
+  const data = DataSchema.parse(dataRaw);
   let configuration = VisualisationConfiguration.parse(undefined);
   let onLoad = c => {
     configuration = VisualisationConfiguration.parse(c);
@@ -22,12 +22,17 @@
     ['Q3', 'Quintile 3'],
     ['Q4', 'Quintile 4'],
     ['Q5', 'Quintile 5'],
+    ['<35', '<35'],
+    ['35 to 49', '35 to 49'],
+    ['50 to 64', '50 to 64'],
+    ['65+', '65+'],
     ['all', 'Overall']
   ];
   const tenureTypes = [
     ['overall', 'Everyone'],
     ['rent', 'Renters'],
-    ['mortgage', 'Mortgagees']
+    ['mortgage', 'Mortgagees'],
+    ['own', 'Owners']
   ];
 </script>
 

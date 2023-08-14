@@ -1,13 +1,13 @@
 <script lang="ts">
   import HousingCostsLineChart from './HousingCostsLineChart.svelte';
-  import quintiles from '../../data/housing-data-clean/quintiles.json';
+  import dataRaw from '../../data/housing-data-clean/data.json';
   import { decode } from '@abcnews/base-36-props';
   import { DataSchema, VisualisationConfiguration } from '../schemas';
   import Scrollyteller from '@abcnews/svelte-scrollyteller';
-  import { annotations, subtitles } from '../constants';
+  import { subtitles } from '../constants';
 
   export let panels;
-  const data = DataSchema.parse(quintiles);
+  const data = DataSchema.parse(dataRaw);
 
   let configuration = VisualisationConfiguration.parse(undefined);
 
