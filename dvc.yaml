@@ -1,5 +1,5 @@
 stages:
-  xls2json:
+  preprocess:
     cmd: node scripts/preprocess.mjs
     deps:
       - data/ben-philips-housing-data/Rent Mortgage Oz2.xls

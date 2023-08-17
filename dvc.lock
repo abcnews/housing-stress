@@ -1,6 +1,6 @@
 schema: '2.0'
 stages:
-  xls2json:
+  preprocess:
     cmd: node scripts/preprocess.mjs
     deps:
     - path: data/ben-philips-housing-data/Rent Mortgage Oz2.xls
@@ -18,5 +18,5 @@ stages:
     outs:
     - path: data/housing-data-clean/data.json
       hash: md5
-      md5: 4dd043b796c2192dec0feea17ea969f7
-      size: 12084
+      md5: 930290b546fd4e2df66b6ca7cede9995
+      size: 20941
