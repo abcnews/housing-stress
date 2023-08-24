@@ -7,3 +7,4 @@ stages:
       - data/ben-philips-housing-data/hstress3.xlsx
     outs:
       - data/housing-data-clean/data.json
+      - data/housing-data-clean/data.csv

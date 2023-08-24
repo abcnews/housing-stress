@@ -45,9 +45,9 @@
   <div>
     <LayerCake
       {data}
-      x={2}
-      y={3}
-      z={1}
+      x={d => d.year}
+      y={d => d.pct}
+      z={d => d.breakdown}
       padding={{ top: 0, right: 30, bottom: 50, left: 25 }}
       xDomain={$xDomain}
       yDomain={$yDomain}

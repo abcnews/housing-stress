@@ -26,13 +26,13 @@
     ['35 to 49', '35 to 49'],
     ['50 to 64', '50 to 64'],
     ['65+', '65+'],
-    ['all', 'Overall']
+    ['overall', 'Overall']
   ];
   const tenureTypes = [
-    ['overall', 'Everyone'],
-    ['rent', 'Renters'],
-    ['mortgage', 'Mortgagees'],
-    ['own', 'Owners']
+    ['everyone', 'Everyone'],
+    ['renter', 'Renters'],
+    ['mortgagee', 'Mortgagees'],
+    ['owner', 'Owners']
   ];
 </script>
 

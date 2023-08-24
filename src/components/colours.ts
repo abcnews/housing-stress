@@ -7,20 +7,20 @@ export const getColourFor = (name: string, tenureType: string) => {
   const type = quartiles.includes(name) ? quartiles : ages;
 
   switch (tenureType) {
-    case 'overall':
-      return name === 'all'
+    case 'everyone':
+      return name === 'overall'
         ? '#6E7787'
         : getOrdinalCategoricalPalette(type.length, OrdinalPalette.Green)[type.indexOf(name)];
-    case 'own':
-      return name === 'all'
+    case 'owner':
+      return name === 'overall'
         ? '#6E7787'
         : getOrdinalCategoricalPalette(type.length, OrdinalPalette.Purple)[type.indexOf(name)];
-    case 'mortgage':
-      return name === 'all'
+    case 'mortgagee':
+      return name === 'overall'
         ? '#CF4452'
         : getOrdinalCategoricalPalette(type.length, OrdinalPalette.Red)[type.indexOf(name)];
-    case 'rent':
-      return name === 'all'
+    case 'renter':
+      return name === 'overall'
         ? '#007BC7'
         : getOrdinalCategoricalPalette(type.length, OrdinalPalette.Blue)[type.indexOf(name)];
   }

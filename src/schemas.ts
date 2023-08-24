@@ -3,7 +3,7 @@ import { Readable } from 'svelte/store';
 import { Tweened } from 'svelte/motion';
 
 // Schemas defined with zod
-export const DataRowSchema = z.tuple([z.string(), z.string(), z.number(), z.number()]);
+export const DataRowSchema = z.object({ tenure: z.string(), breakdown: z.string(), year: z.number(), pct: z.number() });
 export const DataSchema = z.array(DataRowSchema);
 export const AnnotationConfig = z.object({
   name: z.string(),

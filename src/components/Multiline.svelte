@@ -12,8 +12,8 @@
 
   $: grouped = group(
     $data,
-    d => d[0],
-    d => d[1]
+    d => d.tenure,
+    d => d.breakdown
   );
 
   const previousSettings = createPreviousStore<Settings>(custom);
@@ -21,10 +21,11 @@
   const getValues = (data, getX, getY) => data.map(d => [getX(d), getY(d)]);
   const getSeries = (tenure: string, series: string) => $data.filter(d => d[0] === tenure && d[1] === series);
   const getStartingValues = (tenure: string, series: string, from: Settings, getX, getY) => {
-    if (tenure === 'overall' && series === 'all') return false;
-    if (tenure !== 'overall' && series === 'all' && from.selectedTenureTypes.includes('overall'))
-      return getValues(getSeries('overall', series), getX, getY);
-    if (series !== 'all' && from.selectedSeries.includes('all')) return getValues(getSeries(tenure, 'all'), getX, getY);
+    if (tenure === 'everyone' && series === 'overall') return false;
+    if (tenure !== 'everyone' && series === 'overall' && from.selectedTenureTypes.includes('everyone'))
+      return getValues(getSeries('everyone', series), getX, getY);
+    if (series !== 'overall' && from.selectedSeries.includes('overall'))
+      return getValues(getSeries(tenure, 'overall'), getX, getY);
     return false;
   };
 
