@@ -8,7 +8,10 @@ const init = async () => {
 
   const scrollyConfig = loadScrollyteller('', 'u-full', 'mark');
 
-  scrollyConfig.panels = scrollyConfig.panels.map(d => ({ ...d, align: d.align || 'left' }));
+  scrollyConfig.panels = scrollyConfig.panels.map(d => {
+    console.log('d :>> ', d);
+    return { ...d, align: d.align || 'left' };
+  });
 
   new ScrollyWrapper({
     target: scrollyConfig.mountNode,

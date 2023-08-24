@@ -5,6 +5,7 @@
   import { DataSchema, VisualisationConfiguration } from '../schemas';
   import Scrollyteller from '@abcnews/svelte-scrollyteller';
   import { subtitles } from '../constants';
+  import { updateConfig } from '../utils';
 
   export let panels;
   const data = DataSchema.parse(dataRaw);
@@ -12,7 +13,7 @@
   let configuration = VisualisationConfiguration.parse(undefined);
 
   const setConfig = d => {
-    configuration = VisualisationConfiguration.parse(decode(d.config));
+    configuration = updateConfig(VisualisationConfiguration.parse(decode(d.config)));
   };
 </script>
 

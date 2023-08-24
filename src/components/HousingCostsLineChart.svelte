@@ -7,7 +7,7 @@
   import { DataSchema, Extent } from '../schemas';
   import Annotation from './Annotation.svelte';
   import { annotations as annotationDefs } from '../constants';
-  import { getColourFor } from './colours';
+  import { getColourFor } from '../colours';
 
   export let data: DataSchema;
   export let selectedTenureTypes: string[] = [];
@@ -36,7 +36,7 @@
   <div class="title-block">
     <h2 class="chart-title">{title}</h2>
     <h3
-      style="--text-colour:{getColourFor('all', subtitle?.id === 'r' ? 'rent' : 'mortgage')}"
+      style="--text-colour:{getColourFor('overall', subtitle?.id === 'r' ? 'renter' : 'mortgagee')}"
       class="chart-subtitle chart-title-{subtitle?.id}"
     >
       {subtitle?.text || ''}&nbsp;

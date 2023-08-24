@@ -3,7 +3,7 @@
   import { AnnotationConfig, LayerCakeContext } from '../schemas';
   import { fade } from 'svelte/transition';
   import { Html, Svg } from 'layercake';
-  import { getColourFor } from './colours';
+  import { getColourFor } from '../colours';
   import Arrow from './Arrow.svelte';
 
   const { xScale, yScale, xRange } = getContext<LayerCakeContext>('LayerCake');

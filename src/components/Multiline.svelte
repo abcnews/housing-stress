@@ -7,7 +7,7 @@
   import { fade } from 'svelte/transition';
   import { LayerCakeContext, Settings } from '../schemas';
   import { createPreviousStore } from '../stores';
-  import { getColourFor } from './colours';
+  import { getColourFor } from '../colours';
   const { data, xGet, yGet, xDomain, xScale, yScale, custom } = getContext<LayerCakeContext>('LayerCake');
 
   $: grouped = group(
