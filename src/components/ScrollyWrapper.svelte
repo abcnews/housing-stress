@@ -22,7 +22,7 @@
     <HousingCostsLineChart
       {data}
       {...configuration}
-      title="Housing costs as a portion of disposable income"
+      title={configuration.title}
       subtitle={subtitles.find(d => d.id === configuration.subtitle)}
     />
   </div>

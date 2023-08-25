@@ -29,8 +29,10 @@ export const VisualisationConfiguration = z
     selectedTenureTypes: z.array(z.string()).default([]),
     minYear: z.number().default(1984),
     maxYear: z.number().default(2023),
+    maxY: z.number().default(0.65),
     annotations: z.array(z.string()).default([]),
     showLineLabels: z.boolean().default(false),
+    title: z.string().default('Housing costs as a portion of disposable income'),
     subtitle: z.string().default('')
   })
   .default({});

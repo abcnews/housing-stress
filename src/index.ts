@@ -6,16 +6,21 @@ import { proxy } from '@abcnews/dev-proxy';
 const init = async () => {
   await whenOdysseyLoaded;
 
-  const scrollyConfig = loadScrollyteller('', 'u-full', 'mark');
+  ['income', 'age'].forEach(name => {
+    try {
+      const scrollyConfig = loadScrollyteller(name, 'u-full', 'mark');
 
-  scrollyConfig.panels = scrollyConfig.panels.map(d => {
-    return { ...d, align: d.align || 'left' };
-  });
-
-  new ScrollyWrapper({
-    target: scrollyConfig.mountNode,
-    props: {
-      panels: scrollyConfig.panels
+      scrollyConfig.panels = scrollyConfig.panels.map(d => {
+        return { ...d, align: d.align || 'left' };
+      });
+      new ScrollyWrapper({
+        target: scrollyConfig.mountNode,
+        props: {
+          panels: scrollyConfig.panels
+        }
+      });
+    } catch (e) {
+      console.warn(e);
     }
   });
 };

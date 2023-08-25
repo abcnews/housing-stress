@@ -17,13 +17,14 @@
   export let subtitle: { id: string; text: string } | undefined;
   export let minYear: number = 1984;
   export let maxYear: number = 2023;
+  export let maxY: number = 0.65;
   export let annotations: string[] = [];
 
   const getAnnotationConfig = (name: string) => annotationDefs.find(d => d.name === name);
 
   let extents: { x?: Extent; y?: Extent };
 
-  $: extents = { x: [minYear, maxYear], y: [0, 0.65] };
+  $: extents = { x: [minYear, maxYear], y: [0, maxY] };
 
   const xDomain = tweened<Extent>();
   const yDomain = tweened<Extent>();

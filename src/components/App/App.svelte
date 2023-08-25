@@ -1,6 +1,6 @@
 <script lang="ts">
   import 'carbon-components-svelte/css/white.css';
-  import { Checkbox, FormGroup, Slider, RadioButton, RadioButtonGroup } from 'carbon-components-svelte';
+  import { Checkbox, FormGroup, Slider, RadioButton, RadioButtonGroup, TextInput } from 'carbon-components-svelte';
   import HousingCostsLineChart from '../HousingCostsLineChart.svelte';
   import dataRaw from '../../../data/housing-data-clean/data.json';
 
@@ -41,7 +41,7 @@
     slot="visualisation"
     {data}
     {...configuration}
-    title="Housing costs as a portion of disposable income"
+    title={configuration.title}
     subtitle={subtitles.find(d => d.id === configuration.subtitle)}
   />
   <svelte:fragment slot="controls">
@@ -61,6 +61,7 @@
       {/each}
     </FormGroup>
     <FormGroup>
+      <TextInput labelText="Title" bind:value={configuration.title} />
       <RadioButtonGroup legendText="Subtitle" bind:selected={configuration.subtitle}>
         <RadioButton labelText="None" value="" />
         {#each subtitles as subtitle}
@@ -74,6 +75,7 @@
     <FormGroup>
       <Slider labelText="Minimum year" name="minYear" min={1984} max={2023} bind:value={configuration.minYear} />
       <Slider labelText="Maximum year" name="maxYear" min={1984} max={2023} bind:value={configuration.maxYear} />
+      <Slider labelText="Y-Axis maximum" name="maxY" min={0.4} max={0.7} step={0.01} bind:value={configuration.maxY} />
     </FormGroup>
     <FormGroup legendText="Annotations">
       {#each annotations as annotation}
