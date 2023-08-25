@@ -9,7 +9,6 @@ export const annotations: AnnotationConfig[] = [
   {
     name: '90s high point',
     text: 'In <strong>1993</strong> housing costs were at <strong>15.7%</strong> of disposable income',
-    // text: 'Previous<br> high: <strong>15.7%</strong>',
     x: 1990,
     y: 0.35,
     arrows: [{ source: { offset: 10 }, target: { x: 1993, y: 0.159 } }]
@@ -95,6 +94,15 @@ export const annotations: AnnotationConfig[] = [
     x: 2008,
     y: 0.62,
     arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.642, offset: 10 } }]
+  },
+  {
+    name: 'Quintile 2 - Mortgage — %',
+    text: 'Some people closer to the middle of the income distribution are still spending more than <strong>40%</strong> of disposable income',
+    series: 'Q2',
+    tenureType: 'mortgage',
+    x: 2010,
+    y: 0.42,
+    arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.407, offset: 10 } }]
   },
   {
     name: 'Quintile 5 - Mortgage — %',

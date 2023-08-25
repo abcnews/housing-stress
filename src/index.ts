@@ -9,7 +9,6 @@ const init = async () => {
   const scrollyConfig = loadScrollyteller('', 'u-full', 'mark');
 
   scrollyConfig.panels = scrollyConfig.panels.map(d => {
-    console.log('d :>> ', d);
     return { ...d, align: d.align || 'left' };
   });
 
@@ -19,7 +18,6 @@ const init = async () => {
       panels: scrollyConfig.panels
     }
   });
-  // }
 };
 
 proxy('housing-stress').then(init);
