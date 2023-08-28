@@ -8,7 +8,7 @@
   import { LayerCakeContext, Settings } from '../schemas';
   import { createPreviousStore } from '../stores';
   import { getColourFor } from '../colours';
-  const { data, xGet, yGet, xDomain, xScale, yScale, custom } = getContext<LayerCakeContext>('LayerCake');
+  const { data, xGet, yGet, custom } = getContext<LayerCakeContext>('LayerCake');
 
   $: grouped = group(
     $data,
@@ -19,7 +19,8 @@
   const previousSettings = createPreviousStore<Settings>(custom);
 
   const getValues = (data, getX, getY) => data.map(d => [getX(d), getY(d)]);
-  const getSeries = (tenure: string, series: string) => $data.filter(d => d[0] === tenure && d[1] === series);
+  const getSeries = (tenure: string, series: string) =>
+    $data.filter(d => d.tenure === tenure && d.breakdown === series);
   const getStartingValues = (tenure: string, series: string, from: Settings, getX, getY) => {
     if (tenure === 'everyone' && series === 'overall') return false;
     if (tenure !== 'everyone' && series === 'overall' && from.selectedTenureTypes.includes('everyone'))
@@ -32,14 +33,58 @@
   let selectedTenureTypes: string[];
   let selectedSeries: string[];
 
+  type LabelData = { tenure: string; breakdown: string; y: number; x: number }[];
+
+  const LABEL_HEIGHT = 16;
+
+  const positionLineLabels = (lineLabels: LabelData) => {
+    const minDistance = LABEL_HEIGHT;
+    let resolved = false;
+    let attempts = 0;
+    lineLabels.sort((a, b) => a.y - b.y);
+    while (!resolved && attempts < 100) {
+      resolved = true;
+      attempts++;
+      for (let i = 1; i < lineLabels.length; i++) {
+        const a = lineLabels[i - 1];
+        const b = lineLabels[i];
+        const dist = Math.abs(a.y - b.y);
+        if (dist < minDistance) {
+          resolved = false;
+          const delta = (minDistance - dist) / 2;
+          a.y -= delta;
+          b.y += delta;
+        }
+      }
+    }
+    return lineLabels;
+  };
+
   $: selectedTenureTypes = $custom.selectedTenureTypes;
   $: selectedSeries = $custom.selectedSeries;
-  $: showLineLabels = $custom.showLineLabels;
+  $: lineLabels = !$custom.showLineLabels
+    ? []
+    : positionLineLabels(
+        [...grouped].reduce<LabelData>((acc, [tenureType, tenureData]) => {
+          const labels = [...tenureData].reduce<LabelData>((acc, [series, data]) => {
+            if (selectedTenureTypes?.includes(tenureType) && selectedSeries?.includes(series)) {
+              acc.push({
+                tenure: tenureType,
+                breakdown: series,
+                y: $yGet(data[data.length - 1]),
+                x: $xGet(data[data.length - 1])
+              });
+            }
+            return acc;
+          }, []);
+          return [...acc, ...labels];
+        }, [])
+      );
 </script>
 
 <g class="line-group">
   {#each [...grouped] as [tenureType, tenureTypeData] (tenureType)}
-    {#each [...tenureTypeData] as [series, data], i (series)}
+    {#each [...tenureTypeData] as [series, data] (series)}
       {#if selectedTenureTypes?.includes(tenureType) && selectedSeries?.includes(series)}
         <g transition:fade>
           <Line
@@ -47,17 +92,15 @@
             start={getStartingValues(tenureType, series, $previousSettings, $xGet, $yGet)}
             data={data.map(d => [$xGet(d), $yGet(d)])}
           />
-          {#if showLineLabels}
-            <text
-              style:fill={getColourFor(series, tenureType)}
-              class="line-label"
-              x={$xGet(data[data.length - 1]) + 7}
-              y={$yGet(data[data.length - 1])}>{series}</text
-            >
-          {/if}
         </g>
       {/if}
     {/each}
+  {/each}
+
+  {#each lineLabels as { tenure, breakdown, x, y } (tenure + breakdown)}
+    <text transition:fade style:fill={getColourFor(breakdown, tenure)} class="line-label" x={x + 7} {y}
+      >{breakdown}</text
+    >
   {/each}
 </g>
 

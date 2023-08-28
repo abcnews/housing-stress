@@ -92,16 +92,16 @@ export const annotations: AnnotationConfig[] = [
     series: 'Q1',
     tenureType: 'mortgage',
     x: 2008,
-    y: 0.62,
+    y: 0.56,
     arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.642, offset: 10 } }]
   },
   {
     name: 'Quintile 2 - Mortgage — %',
-    text: 'Some people closer to the middle of the income distribution are still spending more than <strong>40%</strong> of disposable income',
+    text: 'Mortgagees closer to the middle of the disposable income distribution can still spend more than <strong>40%</strong> of disposable income on housing costs',
     series: 'Q2',
     tenureType: 'mortgage',
-    x: 2010,
-    y: 0.42,
+    x: 2008,
+    y: 0.46,
     arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.407, offset: 10 } }]
   },
   {

@@ -49,7 +49,7 @@
       x={d => d.year}
       y={d => d.pct}
       z={d => d.breakdown}
-      padding={{ top: 0, right: 30, bottom: 50, left: 25 }}
+      padding={{ top: 0, right: 65, bottom: 50, left: 25 }}
       xDomain={$xDomain}
       yDomain={$yDomain}
       custom={{ selectedTenureTypes, selectedSeries, showLineLabels }}
