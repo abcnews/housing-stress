@@ -12,8 +12,8 @@
 
   let configuration = VisualisationConfiguration.parse(undefined);
 
-  const setConfig = d => {
-    configuration = updateConfig(VisualisationConfiguration.parse(decode(d.config)));
+  const setConfig = (d: any) => {
+    configuration = VisualisationConfiguration.parse(updateConfig(decode(d.config)));
   };
 </script>
 

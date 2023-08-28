@@ -4,7 +4,7 @@
   import AxisY from './AxisY.svelte';
   import Multiline from './Multiline.svelte';
   import { tweened } from 'svelte/motion';
-  import { DataSchema, Extent } from '../schemas';
+  import { Age, DataSchema, Extent } from '../schemas';
   import Annotation from './Annotation.svelte';
   import { annotations as annotationDefs } from '../constants';
   import { getColourFor } from '../colours';
@@ -31,6 +31,7 @@
 
   $: xDomain.set(extents.x);
   $: yDomain.set(extents.y);
+  $: includesAge = [...Age.options].some(d => selectedSeries.includes(d));
 </script>
 
 <div class="chart-container">
@@ -49,7 +50,7 @@
       x={d => d.year}
       y={d => d.pct}
       z={d => d.breakdown}
-      padding={{ top: 0, right: 65, bottom: 50, left: 25 }}
+      padding={{ top: 0, right: includesAge ? 65 : 30, bottom: 50, left: 30 }}
       xDomain={$xDomain}
       yDomain={$yDomain}
       custom={{ selectedTenureTypes, selectedSeries, showLineLabels }}

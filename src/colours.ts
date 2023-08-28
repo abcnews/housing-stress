@@ -1,10 +1,13 @@
 import { OrdinalPalette, getOrdinalCategoricalPalette } from '@abcnews/palette';
+import { Age, Breakdown, Quintiles, Tenure } from './schemas';
 
-export const getColourFor = (name: string, tenureType: string) => {
-  const quartiles = ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'].reverse();
-  const ages = ['<35', '35 to 49', '50 to 64', '65+'].reverse();
+export const getColourFor = (name: Breakdown | undefined, tenureType: Tenure | undefined) => {
+  if (!name || !tenureType) return '#000';
 
-  const type = quartiles.includes(name) ? quartiles : ages;
+  const quintiles: string[] = [...Quintiles.options].reverse();
+  const ages: string[] = [...Age.options].reverse();
+
+  const type = quintiles.includes(name) ? quintiles : ages;
 
   switch (tenureType) {
     case 'everyone':
@@ -13,7 +16,7 @@ export const getColourFor = (name: string, tenureType: string) => {
         : getOrdinalCategoricalPalette(type.length, OrdinalPalette.Green)[type.indexOf(name)];
     case 'owner':
       return name === 'overall'
-        ? '#6E7787'
+        ? '#c449b1'
         : getOrdinalCategoricalPalette(type.length, OrdinalPalette.Purple)[type.indexOf(name)];
     case 'mortgagee':
       return name === 'overall'

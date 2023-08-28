@@ -4,19 +4,20 @@
   import HousingCostsLineChart from '../HousingCostsLineChart.svelte';
   import dataRaw from '../../../data/housing-data-clean/data.json';
 
-  import { DataSchema, VisualisationConfiguration } from '../../schemas';
+  import { Breakdown, DataSchema, Tenure, VisualisationConfiguration } from '../../schemas';
 
   import Builder from '../Builder/Builder.svelte';
   import { annotations, subtitles } from '../../constants';
   import { encode } from '@abcnews/base-36-props';
+  import { updateConfig } from '../../utils';
 
   const data = DataSchema.parse(dataRaw);
   let configuration = VisualisationConfiguration.parse(undefined);
   let onLoad = c => {
-    configuration = VisualisationConfiguration.parse(c);
+    configuration = VisualisationConfiguration.parse(updateConfig(c));
   };
 
-  const series = [
+  const series: [Breakdown, string][] = [
     ['Q1', 'Quintile 1'],
     ['Q2', 'Quintile 2'],
     ['Q3', 'Quintile 3'],
@@ -28,7 +29,7 @@
     ['65+', '65+'],
     ['overall', 'Overall']
   ];
-  const tenureTypes = [
+  const tenureTypes: [Tenure, string][] = [
     ['everyone', 'Everyone'],
     ['renter', 'Renters'],
     ['mortgagee', 'Mortgagees'],

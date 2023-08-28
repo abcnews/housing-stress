@@ -6,7 +6,7 @@
   import { getColourFor } from '../colours';
   import Arrow from './Arrow.svelte';
 
-  const { xScale, yScale, xRange } = getContext<LayerCakeContext>('LayerCake');
+  const { xScale, yScale } = getContext<LayerCakeContext>('LayerCake');
 
   export let annotation: AnnotationConfig;
 
@@ -24,12 +24,11 @@
   };
 </script>
 
-<Html --text-colour={getColourFor(annotation.series || '', annotation.tenureType || '')}>
+<Html --text-colour={getColourFor(annotation.series, annotation.tenureType)}>
   <div
     transition:fade
     class="annotation"
     style:left={`${$xScale(annotation.x)}px`}
-    style:text-align={$xScale(annotation.x) > $xRange[1] * 0.25 ? 'right' : 'left'}
     style:top={`${$yScale(annotation.y)}px`}
     bind:clientWidth={labelWidth}
     bind:clientHeight={labelHeight}
@@ -65,6 +64,7 @@
     transform: translate(-50%, -50%);
     font-family: var(--dls-font-stack-sans);
     font-size: 0.875rem;
+    text-align: center;
     color: #404040;
     font-weight: 500;
     /* inline-size: clamp(5em, fit-content, 50%); */

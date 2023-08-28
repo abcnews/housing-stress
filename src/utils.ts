@@ -1,12 +1,12 @@
-import { VisualisationConfiguration } from './schemas';
+import { Breakdown, Overall, Tenure, VisualisationConfiguration } from './schemas';
 
 export const updateConfig = (config: VisualisationConfiguration): VisualisationConfiguration => {
-  const seriesMap = new Map([['all', 'overall']]);
+  const seriesMap = new Map([['all', Overall.enum.overall]]);
   const tenureMap = new Map([
-    ['rent', 'renter'],
-    ['mortgage', 'mortgagee'],
-    ['overall', 'everyone'],
-    ['own', 'owner']
+    ['rent', Tenure.enum.renter],
+    ['mortgage', Tenure.enum.mortgagee],
+    ['overall', Tenure.enum.everyone],
+    ['own', Tenure.enum.owner]
   ]);
   return {
     ...config,

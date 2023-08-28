@@ -2,16 +2,22 @@ import { z } from 'zod';
 import { Readable } from 'svelte/store';
 import { Tweened } from 'svelte/motion';
 
+export const Tenure = z.enum(['everyone', 'renter', 'mortgagee', 'owner']);
+export const Age = z.enum(['<35', '35 to 49', '50 to 64', '65+']);
+export const Quintiles = z.enum(['Q1', 'Q2', 'Q3', 'Q4', 'Q5']);
+export const Overall = z.enum(['overall']);
+export const Breakdown = z.union([Age, Quintiles, Overall]);
+
 // Schemas defined with zod
-export const DataRowSchema = z.object({ tenure: z.string(), breakdown: z.string(), year: z.number(), pct: z.number() });
+export const DataRowSchema = z.object({ tenure: Tenure, breakdown: Breakdown, year: z.number(), pct: z.number() });
 export const DataSchema = z.array(DataRowSchema);
 export const AnnotationConfig = z.object({
   name: z.string(),
   text: z.string(),
   x: z.number(),
   y: z.number(),
-  series: z.string().optional(),
-  tenureType: z.string().optional(),
+  series: Breakdown.optional(),
+  tenureType: Tenure.optional(),
   arrows: z
     .array(
       z.object({
@@ -25,8 +31,8 @@ export const AnnotationConfig = z.object({
 });
 export const VisualisationConfiguration = z
   .object({
-    selectedSeries: z.array(z.string()).default([]),
-    selectedTenureTypes: z.array(z.string()).default([]),
+    selectedSeries: z.array(Breakdown).default([]),
+    selectedTenureTypes: z.array(Tenure).default([]),
     minYear: z.number().default(1984),
     maxYear: z.number().default(2023),
     maxY: z.number().default(0.65),
@@ -38,6 +44,11 @@ export const VisualisationConfiguration = z
   .default({});
 
 // Types derived from schemas
+export type Tenure = z.infer<typeof Tenure>;
+export type Age = z.infer<typeof Age>;
+export type Quintiles = z.infer<typeof Quintiles>;
+export type Overall = z.infer<typeof Overall>;
+export type Breakdown = z.infer<typeof Breakdown>;
 export type Extent = [number, number] | [string, string] | undefined;
 export type DataRowSchema = z.infer<typeof DataRowSchema>;
 export type DataSchema = z.infer<typeof DataSchema>;
