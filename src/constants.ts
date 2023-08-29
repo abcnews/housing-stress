@@ -20,7 +20,13 @@ export const annotations: AnnotationConfig[] = [
     y: 0.3,
     arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.18, offset: 10 } }]
   },
-
+  {
+    name: 'GFC high interest rates',
+    text: "With official <strong>interest rates at 7.25%</strong> in July 2008, housing costs didn't spike",
+    x: 2001,
+    y: 0.38,
+    arrows: [{ source: { offset: 10 }, target: { x: 2008, y: 0.145, offset: 10 } }]
+  },
   {
     name: 'Everyone - Overall',
     text: '<em><strong>Everyone</strong></em>',
