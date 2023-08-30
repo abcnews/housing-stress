@@ -17,7 +17,12 @@
   };
 </script>
 
-<Scrollyteller {panels} onMarker={setConfig}>
+<Scrollyteller
+  {panels}
+  --color-panel-background="rgba(255,255,255,0.85)"
+  --color-panel-text="#000"
+  onMarker={setConfig}
+>
   <div class="container">
     <HousingCostsLineChart
       {data}
