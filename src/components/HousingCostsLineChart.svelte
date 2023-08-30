@@ -79,9 +79,9 @@
   */
   .chart-container {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     overflow: hidden;
-    padding: 10dvh 0;
+    padding: 10vh 0 12vh;
     display: grid;
     grid-template-rows: auto 1fr;
   }
