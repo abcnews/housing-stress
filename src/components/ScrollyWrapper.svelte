@@ -12,7 +12,7 @@
 
   let configuration = VisualisationConfiguration.parse(undefined);
 
-  const setConfig = (d: any) => {
+  const setConfig = d => {
     configuration = VisualisationConfiguration.parse(updateConfig(decode(d.config)));
   };
 </script>
@@ -41,7 +41,7 @@
     /* width: calc(100% - 49.5rem); */
     /* padding: 20% 0; */
     height: 100%;
-    margin-left: calc(30% + 24.75rem - 3rem);
+    margin-right: calc(30% + 24.75rem - 3rem);
     width: calc(70% - 24.75rem);
     max-width: 39rem;
   }
