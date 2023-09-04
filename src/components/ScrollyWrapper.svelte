@@ -8,6 +8,7 @@
   import { updateConfig } from '../utils';
 
   export let panels;
+  export let name: string;
   const data = DataSchema.parse(dataRaw);
 
   let configuration = VisualisationConfiguration.parse(undefined);
@@ -17,41 +18,59 @@
   };
 </script>
 
-<Scrollyteller
-  {panels}
-  --color-panel-background="rgba(255,255,255,0.85)"
-  --color-panel-text="#000"
-  onMarker={setConfig}
->
-  <div class="container">
-    <HousingCostsLineChart
-      {data}
-      {...configuration}
-      title={configuration.title}
-      subtitle={subtitles.find(d => d.id === configuration.subtitle)}
-    />
-  </div>
-</Scrollyteller>
+<div class="scrolly-wrapper {name}">
+  <Scrollyteller
+    {panels}
+    --color-panel-background="rgba(255,255,255,0.85)"
+    --color-panel-text="#000"
+    onMarker={setConfig}
+  >
+    <div class="container">
+      <HousingCostsLineChart
+        {data}
+        {...configuration}
+        title={configuration.title}
+        subtitle={subtitles.find(d => d.id === configuration.subtitle)}
+      />
+    </div>
+  </Scrollyteller>
+</div>
 
 <style>
   .container {
     margin: auto;
-    /* padding-left: calc(30% - 24.75rem + 49.5rem);
-    padding-right: calc(30% - 24.75rem); */
-    /* width: calc(100% - 49.5rem); */
-    /* padding: 20% 0; */
     height: 100%;
     margin-right: calc(30% + 24.75rem - 3rem);
     width: calc(70% - 24.75rem);
     max-width: 39rem;
   }
 
+  .scrolly-wrapper :global(.st-panel.first) {
+    margin-top: 10vh;
+  }
+
+  .scrolly-wrapper :global(.st-panel.last) {
+    margin-bottom: 40vh;
+  }
+
+  .scrolly-wrapper.income :global(.st-panel.first) {
+    margin-top: 40vh;
+  }
+
+  /* Narrow screen view */
   @media (max-width: 1022px) {
     .container {
       margin: 0;
       padding: 0 8%;
       width: auto;
       max-width: none;
+    }
+
+    .scrolly-wrapper :global(.st-panel.first) {
+      margin-top: 40vh;
+    }
+    .scrolly-wrapper :global(.st-panel.last) {
+      margin-bottom: 100vh;
     }
   }
 </style>
