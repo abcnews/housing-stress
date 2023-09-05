@@ -8,24 +8,24 @@ export const subtitles: { id: string; text: string }[] = [
 export const annotations: AnnotationConfig[] = [
   {
     name: '90s high point',
-    text: 'In <strong>1993</strong> housing costs were at <strong>15.7%</strong> of disposable income',
+    text: 'In <strong>1993</strong> housing costs were at <strong>16.7%</strong> of disposable income',
     x: 1997,
     y: 0.5,
-    arrows: [{ source: { offset: 10 }, target: { x: 1993, y: 0.159 } }]
+    arrows: [{ source: { offset: 10 }, target: { x: 1993, y: 0.167 } }]
   },
   {
     name: 'Current high point',
-    text: "It's up to <strong>17.6%</strong> in <strong>2023</strong>",
+    text: "It's up to <strong>20.1%</strong> in <strong>2023</strong>",
     x: 2016,
     y: 0.3,
-    arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.18, offset: 10 } }]
+    arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.2, offset: 10 } }]
   },
   {
     name: 'GFC high interest rates',
     text: "With official <strong>interest rates at 7.25%</strong> in July 2008, housing costs didn't spike",
     x: 2001,
     y: 0.38,
-    arrows: [{ source: { offset: 10 }, target: { x: 2008, y: 0.145, offset: 10 } }]
+    arrows: [{ source: { offset: 10 }, target: { x: 2008, y: 0.159, offset: 10 } }]
   },
   {
     name: 'Everyone - Overall',
@@ -33,23 +33,23 @@ export const annotations: AnnotationConfig[] = [
     series: 'overall',
     tenureType: 'everyone',
     x: 2010,
-    y: 0.13
+    y: 0.14
   },
   {
     name: 'Renters — Overall',
     text: '<em><strong>Renters</strong></em>',
     series: 'overall',
     tenureType: 'renter',
-    x: 2013,
-    y: 0.27
+    x: 2015,
+    y: 0.24
   },
   {
     name: 'Mortgagees — Overall',
     text: '<em><strong>Mortgagees</strong></em>',
     series: 'overall',
     tenureType: 'mortgagee',
-    x: 2015,
-    y: 0.21
+    x: 2016,
+    y: 0.29
   },
   {
     name: 'Owners — Overall',
@@ -61,12 +61,12 @@ export const annotations: AnnotationConfig[] = [
   },
   {
     name: 'Mortgagees — Overall — %',
-    text: 'Housing costs for <em><strong>mortgagees</strong></em> are now at <strong>25.1%</strong> of disposable income',
+    text: 'Housing costs for <em><strong>mortgagees</strong></em> are now at <strong>28.1%</strong> of disposable income',
     series: 'overall',
     tenureType: 'mortgagee',
     x: 2013,
     y: 0.4,
-    arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.25, offset: 10 } }]
+    arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.281, offset: 10 } }]
   },
   {
     name: 'Quintile 1 - Overall',
