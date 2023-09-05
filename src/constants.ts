@@ -48,8 +48,8 @@ export const annotations: AnnotationConfig[] = [
     text: '<em><strong>Mortgagors</strong></em>',
     series: 'overall',
     tenureType: 'mortgagor',
-    x: 2016,
-    y: 0.29
+    x: 2020,
+    y: 0.3
   },
   {
     name: 'Owners — Overall',

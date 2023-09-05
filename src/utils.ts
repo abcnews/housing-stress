@@ -12,6 +12,7 @@ export const updateConfig = (config: VisualisationConfiguration): VisualisationC
   return {
     ...config,
     selectedSeries: config.selectedSeries.map(d => seriesMap.get(d) || d),
-    selectedTenureTypes: config.selectedTenureTypes.map(d => tenureMap.get(d) || d)
+    selectedTenureTypes: config.selectedTenureTypes.map(d => tenureMap.get(d) || d),
+    annotations: config.annotations.map(d => d.replace('ortgagee', 'ortgagor'))
   };
 };
