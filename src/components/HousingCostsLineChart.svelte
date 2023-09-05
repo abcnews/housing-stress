@@ -40,7 +40,7 @@
   <div class="title-block">
     <h2 class="chart-title">{title}</h2>
     <h3
-      style="--text-colour:{getColourFor('overall', subtitle?.id === 'r' ? 'renter' : 'mortgagee')}"
+      style="--text-colour:{getColourFor('overall', subtitle?.id === 'r' ? 'renter' : 'mortgagor')}"
       class="chart-subtitle chart-title-{subtitle?.id}"
     >
       {subtitle?.text || ''}&nbsp;

@@ -14,23 +14,23 @@ const hstress3Path = path.join(dataPath, 'ben-philips-housing-data', 'hstress3.x
 const outputPath = path.join(dataPath, 'housing-data-clean', 'data.json');
 const outputPathCSV = path.join(dataPath, 'housing-data-clean', 'data.csv');
 
-// (Renter/Mortgagee) / Quintile
+// (Renter/Mortgagor) / Quintile
 const byTenureAndQunintileRaw = csvParse(readFileSync(tenurePath).toString());
 const byTenureAndQunintile = byTenureAndQunintileRaw.map(d => {
   return {
-    tenure: d.Tenure === 'Renter' ? 'renter' : 'mortgagee',
+    tenure: d.Tenure === 'Renter' ? 'renter' : 'mortgagor',
     breakdown: d.Quintile,
     year: +d.Year,
     pct: +d.Mortgage // This column is missnamed in the CSV
   };
 });
 
-// (Renter/Mortgagee/Owner) / Age
+// (Renter/Mortgagor/Owner) / Age
 const hstress3Workbook = xlsx.readFile(hstress3Path);
 const byTenureAndAgeRaw = xlsx.utils.sheet_to_json(hstress3Workbook.Sheets['Table 32 - Table 32'], { range: 'P5:U58' });
 const byTenureAndAge = byTenureAndAgeRaw.reduce((acc, d) => {
   const tenureMap = new Map([
-    ['Mortgagor', 'mortgagee'],
+    ['Mortgagor', 'mortgagor'],
     ['Renter', 'renter'],
     ['Owner', 'owner']
   ]);
@@ -47,7 +47,7 @@ const byTenureAndAge = byTenureAndAgeRaw.reduce((acc, d) => {
   return acc;
 }, []);
 
-// (Owners/Mortgagee/Renter) / Overall
+// (Owners/Mortgagor/Renter) / Overall
 // Get a list of the years covered to match up with data
 const byTenureOverallYears = xlsx.utils.sheet_to_json(hstress3Workbook.Sheets['Table 4 - Table 4'], {
   range: 'A5:A23'
@@ -65,7 +65,7 @@ const byTenureOverall = byTenureOverallRaw
       if (i === 0) {
         acc['20072'] = {
           owner: d.hcost / d.dispinc,
-          mortgagee: d.hcost_1 / d.dispinc_1,
+          mortgagor: d.hcost_1 / d.dispinc_1,
           renter: d.hcost_2 / d.dispinc_2
         };
         return acc;
@@ -75,7 +75,7 @@ const byTenureOverall = byTenureOverallRaw
       if (d.year === 2007) {
         acc.ratio = {
           owner: acc['20072']['owner'] / (d.hcost / d.dispinc),
-          mortgagee: acc['20072']['mortgagee'] / (d.hcost_1 / d.dispinc_1),
+          mortgagor: acc['20072']['mortgagor'] / (d.hcost_1 / d.dispinc_1),
           renter: acc['20072']['renter'] / (d.hcost_2 / d.dispinc_2)
         };
       }
@@ -87,10 +87,10 @@ const byTenureOverall = byTenureOverallRaw
         pct: +d.year <= 2007 ? (d.hcost / d.dispinc) * acc.ratio.owner : d.hcost / d.dispinc
       });
       acc.data.push({
-        tenure: 'mortgagee',
+        tenure: 'mortgagor',
         breakdown: 'overall',
         year: +d.year,
-        pct: +d.year <= 2007 ? (d.hcost_1 / d.dispinc_1) * acc.ratio.mortgagee : d.hcost_1 / d.dispinc_1
+        pct: +d.year <= 2007 ? (d.hcost_1 / d.dispinc_1) * acc.ratio.mortgagor : d.hcost_1 / d.dispinc_1
       });
       acc.data.push({
         tenure: 'renter',

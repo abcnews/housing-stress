@@ -32,7 +32,7 @@
   const tenureTypes: [Tenure, string][] = [
     ['everyone', 'Everyone'],
     ['renter', 'Renters'],
-    ['mortgagee', 'Mortgagees'],
+    ['mortgagor', 'Mortgagors'],
     ['owner', 'Owners']
   ];
 </script>

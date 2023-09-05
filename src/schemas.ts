@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { Readable } from 'svelte/store';
 import { Tweened } from 'svelte/motion';
 
-export const Tenure = z.enum(['everyone', 'renter', 'mortgagee', 'owner']);
+export const Tenure = z.enum(['everyone', 'renter', 'mortgagor', 'owner']);
 export const Age = z.enum(['<35', '35 to 49', '50 to 64', '65+']);
 export const Quintiles = z.enum(['Q1', 'Q2', 'Q3', 'Q4', 'Q5']);
 export const Overall = z.enum(['overall']);

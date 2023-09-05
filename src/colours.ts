@@ -18,7 +18,7 @@ export const getColourFor = (name: Breakdown | undefined, tenureType: Tenure | u
       return name === 'overall'
         ? '#c449b1'
         : getOrdinalCategoricalPalette(type.length, OrdinalPalette.Purple)[type.indexOf(name)];
-    case 'mortgagee':
+    case 'mortgagor':
       return name === 'overall'
         ? '#CF4452'
         : getOrdinalCategoricalPalette(type.length, OrdinalPalette.Red)[type.indexOf(name)];

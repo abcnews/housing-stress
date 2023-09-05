@@ -14,9 +14,9 @@ stages:
     outs:
     - path: data/housing-data-clean/data.csv
       hash: md5
-      md5: fe41d18d05e3a97b16a0dd2890c5e508
+      md5: 41b11566abddf22ddf00922c60253c4d
       size: 18629
     - path: data/housing-data-clean/data.json
       hash: md5
-      md5: 756a51cb34e2224acc3751b7b17d743a
+      md5: 7aafe3ab05e8189821d168b6472377f4
       size: 39405

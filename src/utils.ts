@@ -4,7 +4,8 @@ export const updateConfig = (config: VisualisationConfiguration): VisualisationC
   const seriesMap = new Map([['all', Overall.enum.overall]]);
   const tenureMap = new Map([
     ['rent', Tenure.enum.renter],
-    ['mortgage', Tenure.enum.mortgagee],
+    ['mortgage', Tenure.enum.mortgagor],
+    ['mortgagee', Tenure.enum.mortgagor],
     ['overall', Tenure.enum.everyone],
     ['own', Tenure.enum.owner]
   ]);

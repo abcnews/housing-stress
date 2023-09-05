@@ -1,7 +1,7 @@
 import { AnnotationConfig } from './schemas';
 
 export const subtitles: { id: string; text: string }[] = [
-  { id: 'm', text: 'For mortgagees' },
+  { id: 'm', text: 'For mortgagors' },
   { id: 'r', text: 'For renters' }
 ];
 
@@ -44,10 +44,10 @@ export const annotations: AnnotationConfig[] = [
     y: 0.24
   },
   {
-    name: 'Mortgagees — Overall',
-    text: '<em><strong>Mortgagees</strong></em>',
+    name: 'Mortgagors — Overall',
+    text: '<em><strong>Mortgagors</strong></em>',
     series: 'overall',
-    tenureType: 'mortgagee',
+    tenureType: 'mortgagor',
     x: 2016,
     y: 0.29
   },
@@ -60,10 +60,10 @@ export const annotations: AnnotationConfig[] = [
     y: 0.05
   },
   {
-    name: 'Mortgagees — Overall — %',
-    text: 'Housing costs for <em><strong>mortgagees</strong></em> are now at <strong>28.1%</strong> of disposable income',
+    name: 'Mortgagors — Overall — %',
+    text: 'Housing costs for <em><strong>mortgagors</strong></em> are now at <strong>28.1%</strong> of disposable income',
     series: 'overall',
-    tenureType: 'mortgagee',
+    tenureType: 'mortgagor',
     x: 2013,
     y: 0.4,
     arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.281, offset: 10 } }]
@@ -72,7 +72,7 @@ export const annotations: AnnotationConfig[] = [
     name: 'Quintile 1 - Overall',
     text: 'Lowest 20%',
     series: 'Q1',
-    tenureType: 'mortgagee',
+    tenureType: 'mortgagor',
     x: 1995,
     y: 0.23
   },
@@ -80,7 +80,7 @@ export const annotations: AnnotationConfig[] = [
     name: 'Quintile 5 - Overall',
     text: 'Highest 20%',
     series: 'Q5',
-    tenureType: 'mortgagee',
+    tenureType: 'mortgagor',
     x: 1995,
     y: 0.23
   },
@@ -88,7 +88,7 @@ export const annotations: AnnotationConfig[] = [
     name: 'Quintile 1 - Mortgage',
     text: '<em><strong>Lowest</strong> 20% of incomes</em>',
     series: 'Q1',
-    tenureType: 'mortgagee',
+    tenureType: 'mortgagor',
     x: 2008,
     y: 0.49
   },
@@ -96,7 +96,7 @@ export const annotations: AnnotationConfig[] = [
     name: 'Quintile 5 - Mortgage',
     text: '<em><strong>Highest</strong> 20% of incomes</em>',
     series: 'Q5',
-    tenureType: 'mortgagee',
+    tenureType: 'mortgagor',
     x: 2013,
     y: 0.12
   },
@@ -104,16 +104,16 @@ export const annotations: AnnotationConfig[] = [
     name: 'Quintile 1 - Mortgage — %',
     text: 'Those on the <em><strong>lowest</strong></em> incomes now have mortgage costs at <strong>64.2%</strong> of disposable income',
     series: 'Q1',
-    tenureType: 'mortgagee',
+    tenureType: 'mortgagor',
     x: 2008,
     y: 0.56,
     arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.642, offset: 10 } }]
   },
   {
     name: 'Quintile 2 - Mortgage — %',
-    text: 'Mortgagees closer to the middle can still spend more than <strong>40%</strong> of disposable income on housing costs',
+    text: 'Mortgagors closer to the middle can still spend more than <strong>40%</strong> of disposable income on housing costs',
     series: 'Q2',
-    tenureType: 'mortgagee',
+    tenureType: 'mortgagor',
     x: 2008,
     y: 0.46,
     arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.407, offset: 10 } }]
@@ -122,7 +122,7 @@ export const annotations: AnnotationConfig[] = [
     name: 'Quintile 5 - Mortgage — %',
     text: "The <em><strong>highest</strong></em> earners' mortgage costs are <strong>22.9%</strong> of disposable income",
     series: 'Q5',
-    tenureType: 'mortgagee',
+    tenureType: 'mortgagor',
     x: 2008,
     y: 0.3,
     arrows: [{ source: { offset: 10 }, target: { x: 2023, y: 0.229, offset: 10 } }]
