@@ -76,7 +76,7 @@
     <FormGroup>
       <Slider labelText="Minimum year" name="minYear" min={1984} max={2023} bind:value={configuration.minYear} />
       <Slider labelText="Maximum year" name="maxYear" min={1984} max={2023} bind:value={configuration.maxYear} />
-      <Slider labelText="Y-Axis maximum" name="maxY" min={0.4} max={0.7} step={0.01} bind:value={configuration.maxY} />
+      <Slider labelText="Y-Axis maximum" name="maxY" min={0.2} max={0.7} step={0.01} bind:value={configuration.maxY} />
     </FormGroup>
     <FormGroup legendText="Annotations">
       {#each annotations as annotation}

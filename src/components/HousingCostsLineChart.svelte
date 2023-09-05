@@ -19,6 +19,8 @@
   export let maxYear: number = 2023;
   export let maxY: number = 0.65;
   export let annotations: string[] = [];
+  export let height: string = '100vh';
+  export let padding: string = '10vh 0 12vh';
 
   const getAnnotationConfig = (name: string) => annotationDefs.find(d => d.name === name);
 
@@ -34,7 +36,7 @@
   $: includesAge = [...Age.options].some(d => selectedSeries.includes(d));
 </script>
 
-<div class="chart-container">
+<div class="chart-container" style="--container-height: {height}; --padding: {padding};">
   <div class="title-block">
     <h2 class="chart-title">{title}</h2>
     <h3
@@ -79,9 +81,9 @@
   */
   .chart-container {
     width: 100%;
-    height: 100vh;
+    height: var(--container-height, 100vh);
     overflow: hidden;
-    padding: 10vh 0 12vh;
+    padding: var(--padding, 10vh 0 12vh);
     display: grid;
     grid-template-rows: auto 1fr;
   }
