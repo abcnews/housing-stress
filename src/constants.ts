@@ -111,7 +111,7 @@ export const annotations: AnnotationConfig[] = [
   },
   {
     name: 'Quintile 2 - Mortgage — %',
-    text: 'Mortgagees closer to the middle of the disposable income distribution can still spend more than <strong>40%</strong> of disposable income on housing costs',
+    text: 'Mortgagees closer to the middle can still spend more than <strong>40%</strong> of disposable income on housing costs',
     series: 'Q2',
     tenureType: 'mortgagee',
     x: 2008,
