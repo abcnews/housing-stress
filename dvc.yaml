@@ -2,7 +2,6 @@ stages:
   preprocess:
     cmd: node scripts/preprocess.mjs
     deps:
-      - data/ben-philips-housing-data/Rent Mortgage Oz2.xls
       - data/ben-philips-housing-data/tenureqntl.csv
       - data/ben-philips-housing-data/hstress3.xlsx
     outs:

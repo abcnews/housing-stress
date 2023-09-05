@@ -9,25 +9,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const dataPath = path.join(__dirname, '..', 'data');
-const rentMortgageOz2Path = path.join(dataPath, 'ben-philips-housing-data', 'Rent Mortgage Oz2.xls');
 const tenurePath = path.join(dataPath, 'ben-philips-housing-data', 'tenureqntl.csv');
 const hstress3Path = path.join(dataPath, 'ben-philips-housing-data', 'hstress3.xlsx');
 const outputPath = path.join(dataPath, 'housing-data-clean', 'data.json');
 const outputPathCSV = path.join(dataPath, 'housing-data-clean', 'data.csv');
-
-const rentMortgageOz2 = xlsx.readFile(rentMortgageOz2Path);
-
-// Everyone / Quintile
-const byQuintileRaw = xlsx.utils.sheet_to_json(rentMortgageOz2.Sheets['working'], { range: 'B60:U65' });
-const byQuintile = byQuintileRaw.reduce((acc, d) => {
-  const quintile = d.Year;
-  Object.entries(d).forEach(([year, pct]) => {
-    if (year !== 'Year') {
-      acc.push({ tenure: 'everyone', breakdown: quintile, year: +year, pct });
-    }
-  });
-  return acc;
-}, []);
 
 // (Renter/Mortgagee) / Quintile
 const byTenureAndQunintileRaw = csvParse(readFileSync(tenurePath).toString());
@@ -40,18 +25,9 @@ const byTenureAndQunintile = byTenureAndQunintileRaw.map(d => {
   };
 });
 
-// (Renter/Mortgagee/Everyone) / Overall
-const byTenureRaw = xlsx.utils.sheet_to_json(rentMortgageOz2.Sheets['working'], { range: 'A24:D44' });
-const byTenure = byTenureRaw.reduce((acc, d) => {
-  acc.push({ tenure: 'renter', breakdown: 'overall', year: +d.Year, pct: +d.Rent });
-  acc.push({ tenure: 'mortgagee', breakdown: 'overall', year: +d.Year, pct: +d.Mortgage });
-  acc.push({ tenure: 'everyone', breakdown: 'overall', year: +d.Year, pct: +d.All });
-  return acc;
-}, []);
-
 // (Renter/Mortgagee/Owner) / Age
-const byAgeWorkbook = xlsx.readFile(hstress3Path);
-const byTenureAndAgeRaw = xlsx.utils.sheet_to_json(byAgeWorkbook.Sheets['Table 32 - Table 32'], { range: 'P5:U58' });
+const hstress3Workbook = xlsx.readFile(hstress3Path);
+const byTenureAndAgeRaw = xlsx.utils.sheet_to_json(hstress3Workbook.Sheets['Table 32 - Table 32'], { range: 'P5:U58' });
 const byTenureAndAge = byTenureAndAgeRaw.reduce((acc, d) => {
   const tenureMap = new Map([
     ['Mortgagor', 'mortgagee'],
@@ -71,35 +47,99 @@ const byTenureAndAge = byTenureAndAgeRaw.reduce((acc, d) => {
   return acc;
 }, []);
 
-// Owners / Overall
+// (Owners/Mortgagee/Renter) / Overall
 // Get a list of the years covered to match up with data
-const byOwnersOverallYears = xlsx.utils.sheet_to_json(byAgeWorkbook.Sheets['Table 4 - Table 4'], { range: 'A5:A23' });
-const byOwnersOverallRaw = xlsx.utils
-  .sheet_to_json(byAgeWorkbook.Sheets['Table 4 - Table 4'], { range: 'B3:C23' })
+const byTenureOverallYears = xlsx.utils.sheet_to_json(hstress3Workbook.Sheets['Table 4 - Table 4'], {
+  range: 'A5:A23'
+});
+const byTenureOverallRaw = xlsx.utils
+  .sheet_to_json(hstress3Workbook.Sheets['Table 4 - Table 4'], { range: 'B3:G23' })
   .slice(1) // Get rid of extra row due to merged cells in source sheet
-  .map((d, i) => ({ ...byOwnersOverallYears[i], ...d }))
+  .map((d, i) => ({ ...byTenureOverallYears[i], ...d }))
   .reverse(); // Revserse so we can pluck the 2007 adjustment year from the first row.
 
-const byOwnersOverall = byOwnersOverallRaw
+const byTenureOverall = byTenureOverallRaw
   .reduce(
     (acc, d, i) => {
       // Save the 20072 pct value so <= 2007 values can be adjusted later
       if (i === 0) {
-        acc['20072'] = d.hcost / d.dispinc;
+        acc['20072'] = {
+          owner: d.hcost / d.dispinc,
+          mortgagee: d.hcost_1 / d.dispinc_1,
+          renter: d.hcost_2 / d.dispinc_2
+        };
         return acc;
       }
 
       // Calculate the ratio so <= 2007 values can be adjusted
       if (d.year === 2007) {
-        acc.ratio = acc['20072'] / (d.hcost / d.dispinc);
+        acc.ratio = {
+          owner: acc['20072']['owner'] / (d.hcost / d.dispinc),
+          mortgagee: acc['20072']['mortgagee'] / (d.hcost_1 / d.dispinc_1),
+          renter: acc['20072']['renter'] / (d.hcost_2 / d.dispinc_2)
+        };
       }
 
       acc.data.push({
         tenure: 'owner',
         breakdown: 'overall',
         year: +d.year,
-        pct: +d.year <= 2007 ? (d.hcost / d.dispinc) * acc.ratio : d.hcost / d.dispinc
+        pct: +d.year <= 2007 ? (d.hcost / d.dispinc) * acc.ratio.owner : d.hcost / d.dispinc
       });
+      acc.data.push({
+        tenure: 'mortgagee',
+        breakdown: 'overall',
+        year: +d.year,
+        pct: +d.year <= 2007 ? (d.hcost_1 / d.dispinc_1) * acc.ratio.mortgagee : d.hcost_1 / d.dispinc_1
+      });
+      acc.data.push({
+        tenure: 'renter',
+        breakdown: 'overall',
+        year: +d.year,
+        pct: +d.year <= 2007 ? (d.hcost_2 / d.dispinc_2) * acc.ratio.renter : d.hcost_2 / d.dispinc_2
+      });
+      return acc;
+    },
+    { data: [] }
+  )
+  .data.reverse(); // Grab just the data, not the workings and reverse it back to year order for good measure
+
+// Everyone / Overall
+// Get a list of the years covered to match up with data
+const byEveryoneOverallYears = xlsx.utils.sheet_to_json(hstress3Workbook.Sheets['Table 5 - Table 5'], {
+  range: 'A3:A21'
+});
+const byEveryoneOverallRaw = xlsx.utils
+  .sheet_to_json(hstress3Workbook.Sheets['Table 5 - Table 5'], { range: 'B1:C21' })
+  .slice(1) // Get rid of extra row due to merged cells in source sheet
+  .map((d, i) => ({ ...byEveryoneOverallYears[i], ...d }))
+  .reverse(); // Revserse so we can pluck the 2007 adjustment year from the first row.
+
+const byEveryoneOverall = byEveryoneOverallRaw
+  .reduce(
+    (acc, d, i) => {
+      // Save the 20072 pct value so <= 2007 values can be adjusted later
+      if (i === 0) {
+        acc['20072'] = {
+          everyone: d.hcost / d.dispinc
+        };
+        return acc;
+      }
+
+      // Calculate the ratio so <= 2007 values can be adjusted
+      if (d.year === 2007) {
+        acc.ratio = {
+          everyone: acc['20072']['everyone'] / (d.hcost / d.dispinc)
+        };
+      }
+
+      acc.data.push({
+        tenure: 'everyone',
+        breakdown: 'overall',
+        year: +d.year,
+        pct: +d.year <= 2007 ? (d.hcost / d.dispinc) * acc.ratio.everyone : d.hcost / d.dispinc
+      });
+
       return acc;
     },
     { data: [] }
@@ -109,10 +149,10 @@ const byOwnersOverall = byOwnersOverallRaw
 // Everyone / Age
 
 // Get a list of the years covered to match up with the data
-const byAgeYears = xlsx.utils.sheet_to_json(byAgeWorkbook.Sheets['Table 12 - Table 12'], { range: 'A5:A23' });
+const byAgeYears = xlsx.utils.sheet_to_json(hstress3Workbook.Sheets['Table 12 - Table 12'], { range: 'A5:A23' });
 
 const byEveryoneAgeRaw = xlsx.utils
-  .sheet_to_json(byAgeWorkbook.Sheets['Table 12 - Table 12'], { range: 'B3:U23' })
+  .sheet_to_json(hstress3Workbook.Sheets['Table 12 - Table 12'], { range: 'B3:U23' })
   .slice(1) // Remove extra row due to merged cells in source sheet
   .map((d, i) => ({ ...byAgeYears[i], ...d }))
   .reverse(); // Reverse it so we can pluck the 2007 adjustment year from the first row.
@@ -172,11 +212,10 @@ const byEveryoneAge = byEveryoneAgeRaw
   .data.reverse(); // Grab just the data, not the workings and reverse it back to year order for good measure
 
 const clean = [
-  ...byQuintile,
   ...byTenureAndQunintile,
-  ...byTenure,
   ...byTenureAndAge,
-  ...byOwnersOverall,
+  ...byTenureOverall,
+  ...byEveryoneOverall,
   ...byEveryoneAge
 ].filter(d => d.year !== 2021);
 

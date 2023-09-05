@@ -3,10 +3,6 @@ stages:
   preprocess:
     cmd: node scripts/preprocess.mjs
     deps:
-    - path: data/ben-philips-housing-data/Rent Mortgage Oz2.xls
-      hash: md5
-      md5: 23766dabf42cb597b35f861c3ec4a57e
-      size: 152064
     - path: data/ben-philips-housing-data/hstress3.xlsx
       hash: md5
       md5: fc565f88f4c952cf290cbfcf5368ce8d
@@ -18,9 +14,9 @@ stages:
     outs:
     - path: data/housing-data-clean/data.csv
       hash: md5
-      md5: 3b867cae608dfb2f9de211c686f54f16
-      size: 22194
+      md5: fe41d18d05e3a97b16a0dd2890c5e508
+      size: 18629
     - path: data/housing-data-clean/data.json
       hash: md5
-      md5: 578a417771e9f10e377e4e46433804b7
-      size: 46810
+      md5: 756a51cb34e2224acc3751b7b17d743a
+      size: 39405
