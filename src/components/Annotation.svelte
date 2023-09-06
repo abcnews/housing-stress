@@ -5,6 +5,7 @@
   import { Html, Svg } from 'layercake';
   import { getColourFor } from '../colours';
   import Arrow from './Arrow.svelte';
+  import { getLabelColour } from '@abcnews/palette';
 
   const { xScale, yScale } = getContext<LayerCakeContext>('LayerCake');
 
@@ -24,7 +25,7 @@
   };
 </script>
 
-<Html --text-colour={getColourFor(annotation.series, annotation.tenureType)}>
+<Html --text-colour={getLabelColour(getColourFor(annotation.series, annotation.tenureType))}>
   <div
     transition:fade
     class="annotation"

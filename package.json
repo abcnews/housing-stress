@@ -51,7 +51,7 @@
 		"@abcnews/dev-proxy": "^1.2.1",
 		"@abcnews/env-utils": "^3.1.0",
 		"@abcnews/mount-utils": "^3.0.0",
-		"@abcnews/palette": "^1.0.0-3",
+		"@abcnews/palette": "^1.0.0-6",
 		"@abcnews/svelte-scrollyteller": "^1.0.0-2",
 		"d3-array": "^3.2.4",
 		"d3-dsv": "^3.0.1",

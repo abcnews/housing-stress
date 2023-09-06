@@ -5,9 +5,10 @@
   import { group } from 'd3-array';
   import Line from './Line.svelte';
   import { fade } from 'svelte/transition';
-  import { LayerCakeContext, Settings } from '../schemas';
+  import { Breakdown, LayerCakeContext, Settings, Tenure } from '../schemas';
   import { createPreviousStore } from '../stores';
   import { getColourFor } from '../colours';
+  import { getLabelColour } from '@abcnews/palette';
   const { data, xGet, yGet, custom } = getContext<LayerCakeContext>('LayerCake');
 
   $: grouped = group(
@@ -33,7 +34,7 @@
   let selectedTenureTypes: string[];
   let selectedSeries: string[];
 
-  type LabelData = { tenure: string; breakdown: string; y: number; x: number }[];
+  type LabelData = { tenure: Tenure; breakdown: Breakdown; y: number; x: number }[];
 
   const LABEL_HEIGHT = 16;
 
@@ -98,7 +99,7 @@
   {/each}
 
   {#each lineLabels as { tenure, breakdown, x, y } (tenure + breakdown)}
-    <text transition:fade style:fill={getColourFor(breakdown, tenure)} class="line-label" x={x + 7} {y}
+    <text transition:fade style:fill={getLabelColour(getColourFor(breakdown, tenure))} class="line-label" x={x + 7} {y}
       >{breakdown}</text
     >
   {/each}
