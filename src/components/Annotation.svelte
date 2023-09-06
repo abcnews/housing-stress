@@ -64,7 +64,7 @@
     position: absolute;
     transform: translate(-50%, -50%);
     font-family: var(--dls-font-stack-sans);
-    font-size: 0.875rem;
+    font-size: 14px;
     text-align: center;
     color: #404040;
     font-weight: 500;

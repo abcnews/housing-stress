@@ -108,7 +108,7 @@
 <style>
   .line-label {
     font-family: var(--dls-font-stack-sans);
-    font-size: 0.875em;
+    font-size: 14px;
     font-weight: bold;
     text-anchor: start;
     dominant-baseline: central;

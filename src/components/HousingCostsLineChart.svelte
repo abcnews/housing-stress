@@ -92,12 +92,12 @@
   .chart-subtitle {
     font-family: var(--dls-font-stack-sans);
     font-weight: 700;
-    font-size: 1.125rem;
+    font-size: 18px;
     text-align: center;
   }
 
   .chart-subtitle {
-    font-size: 1rem;
+    font-size: 16px;
     color: var(--text-colour);
     margin-top: 1em;
   }

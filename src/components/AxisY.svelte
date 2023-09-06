@@ -82,7 +82,7 @@
 
 <style>
   .tick-label {
-    font-size: 0.75rem;
+    font-size: 12px;
     font-weight: 400;
     font-family: var(--dls-font-stack-sans);
     fill: #646464;
